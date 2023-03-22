@@ -26,7 +26,7 @@ export const Footer = () => (
           <Flex alignItems={'center'}>
             <Icon as={MdLocalDrink} h={6} w={6} color='orange.400' />
             <Text fontSize={'2xl'} fontWeight='extrabold'>
-                Just Juice
+              Just Juice
             </Text>
           </Flex>
           <ButtonGroup variant='ghost'>
