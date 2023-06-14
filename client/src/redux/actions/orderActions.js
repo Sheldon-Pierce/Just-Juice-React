@@ -1,12 +1,13 @@
 import axios from "axios";
-import { setError, shippingAddressAdd,  } from '../slices/order';
+import { setError, shippingAddressAdd, clearOrder  } from '../slices/order';
 
-export const setShippingAddres = (data) => (dispatch) => {
+
+export const setShippingAddress = (data) => (dispatch) => {
     dispatch(shippingAddressAdd(data));
 }
 
 
-export const setShippingAddresError = (value) => (dispatch) => {
+export const setShippingAddressError = (value) => (dispatch) => {
     dispatch(setError(value));
 }
 
@@ -19,12 +20,14 @@ export const createOrder = (order) => async (getState) => {
     try {
         const config = {
             headers: {
+              // eslint-disable-next-line no-undef
               Authorization: `Bearer ${userInfo.token}`,
               'Content-Type': 'application/json',
             },
           };
           const {data} = await axios.post('api/orders', preparedOrder, config)
     } catch (error) {
+        // eslint-disable-next-line no-undef
         dispatch(
             setError(
               error.response && error.response.data.message
@@ -35,4 +38,8 @@ export const createOrder = (order) => async (getState) => {
             )
           );
     }
+};
+
+export const resetOrder = () => async(dispatch) => {
+    dispatch(clearOrder)
 }
