@@ -11,7 +11,7 @@ export const setShippingAddressError = (value) => (dispatch) => {
     dispatch(setError(value));
 }
 
-export const createOrder = (order) => async (getState) => {
+export const createOrder = (order) => async (dispatch, getState) => {
     const {
         order: {shippingAddress},
     } = getState()
