@@ -58,6 +58,7 @@ const CheckoutOrderSummary = () => {
   }, [error, shippingAddress, total, expressShipping, shipping, dispatch]);
 
   const onPaymentSucess = async (data) => {
+    onSuccessOpen()
     dispatch(
       createOrder({
         orderItems: cart,
@@ -71,11 +72,10 @@ const CheckoutOrderSummary = () => {
     );
     dispatch(resetOrder());
     dispatch(resetCart());
-    //openSuccess()
   };
 
   const onPaymentError = () => {
-    //onError()
+    onErrorOpen()
   };
 
   return (

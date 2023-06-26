@@ -13,19 +13,19 @@ import {
   const PaymentErrorModal = ({isOpen, onClose}) => {
     return (
       <>
-        <Modal size='full' isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalBody>
               <Wrap justify='center' direction='column' align='center' mt='20px'>
                 <Alert
+                  h='200px'
                   status='error'
                   varient='subtle'
                   flexDirection='column'
                   alignItems='center'
                   justifyContent='center'
                   textAlign='center'
-                  height='auto'
                 >
                   <AlertIcon boxSize='55px'/>
                   <AlertTitle pt='8px' fontSize='xl' >Payment Failed!</AlertTitle>
