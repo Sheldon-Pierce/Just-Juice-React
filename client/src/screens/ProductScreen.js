@@ -17,30 +17,49 @@ import {
   Button,
   SimpleGrid,
   useToast,
+  Tooltip,
+  Textarea,
+  Input
 } from '@chakra-ui/react';
 
 import { MinusIcon, StarIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { BiPackage, BiCheckShield, BiSupport } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProduct } from '../redux/actions/productActions';
+import {
+  getProduct
+} from '../redux/actions/productActions';
 import { addCartItem } from '../redux/actions/cartActions';
 import { useEffect, useState } from 'react';
+import { createProductReview, resetProductError } from '../redux/actions/productActions';
+
 
 const ProductScreen = () => {
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(1);
+  const [title, setTitle] = useState('');
+  const [reviewBoxOpen, setReviewBoxOpen] = useState(false);
   const [amount, setAmount] = useState(1);
   let { id } = useParams();
   const toast = useToast();
   // redux
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  const { loading, error, product } = products;
+  const { loading, error, product, reviewSend } = products;
 
   const cartContent = useSelector((state) => state.cart);
   const { cart } = cartContent;
 
+  const user = useSelector((state) => state.user);
+  const { userInfo } = user;
+
   useEffect(() => {
     dispatch(getProduct(id));
-  }, [dispatch, id, cart]);
+
+   if (reviewSend) {
+    toast({ description: 'Product review saved', status: 'success', isClosable: true });
+    dispatch(resetProductError());
+    setReviewBoxOpen(false);
+   }}, [dispatch, id, cart, reviewSend, toast]);
 
   const changeAmount = (input) => {
     if (input === 'plus') {
@@ -49,6 +68,15 @@ const ProductScreen = () => {
     if (input === 'minus') {
       setAmount(amount - 1);
     }
+  };
+
+  const hasUserReviewed = () =>
+    product.reviews.some((item) => item.user === userInfo._id);
+
+  const onSubmit = () => {
+    dispatch(
+      createProductReview(product._id, userInfo._id, comment, rating, title)
+    );
   };
 
   const addItem = () => {
@@ -148,7 +176,7 @@ const ProductScreen = () => {
                         />
                       </HStack>
                       <Text fontSize={'md'} fontWeight='bold' ml='4px'>
-                        {product.numberOfRevies} Reviews
+                        {product.numberOfReviews} Reviews
                       </Text>
                     </Flex>
                   </Box>
@@ -175,14 +203,18 @@ const ProductScreen = () => {
                       <SmallAddIcon w='20px' h='25px' />
                     </Button>
                   </Flex>
-                  <Button isDisabled={product.stock === 0} colorScheme={'orange'} onClick={() => addItem()}>
+                  <Button
+                    isDisabled={product.stock === 0}
+                    colorScheme={'orange'}
+                    onClick={() => addItem()}
+                  >
                     Add to Cart
                   </Button>
                   <Stack width='270px'>
                     <Flex alignItems={'center'}>
                       <BiPackage size='20px' />
                       <Text fontWeight={'medium'} fontSize='sm' ml='2'>
-                        Free shipping if order is above $1000
+                        Free shipping if order is above $60
                       </Text>
                     </Flex>
                     <Flex alignItems={'center'}>
@@ -209,6 +241,60 @@ const ProductScreen = () => {
                 <Image mb='30px' src={product.image} alt={product.name}></Image>
               </Flex>
             </Stack>
+            {userInfo && (
+              <>
+                <Tooltip
+                  label={
+                    hasUserReviewed()
+                      ? 'You have already reviewed this product.'
+                      : ''
+                  }
+                  fontSize='md'
+                >
+                  <Button
+                    disabled={hasUserReviewed()}
+                    my='20px'
+                    w='140px'
+                    colorScheme='orange'
+                    onClick={() => setReviewBoxOpen(!reviewBoxOpen)}
+                  >
+                    Write a review
+                  </Button>
+                </Tooltip>
+              {reviewBoxOpen && (
+                  <Stack mb='20px'>
+                    <Wrap>
+                      <HStack spacing='20px'>
+                        <Button variant='outline' onClick={() => setRating(1)}>
+                          <StarIcon color='orange.500' />
+                        </Button>
+                        <Button variant='outline' onClick={() => setRating(2)}>
+                          <StarIcon color={rating >= 2 ? 'orange.500' : 'gray.200'} />
+                        </Button>
+                        <Button variant='outline' onClick={() => setRating(3)}>
+                          <StarIcon color={rating >= 3 ? 'orange.500' : 'gray.200'} />
+                        </Button>
+                        <Button variant='outline' onClick={() => setRating(4)}>
+                          <StarIcon color={rating >= 4 ? 'orange.500' : 'gray.200'} />
+                        </Button>
+                        <Button variant='outline' onClick={() => setRating(5)}>
+                          <StarIcon color={rating >= 5 ? 'orange.500' : 'gray.200'} />
+                        </Button>
+                      </HStack>
+                    </Wrap>
+                    <Input onChange={(e) => {
+                      setTitle(e.target.value);
+                    }} placeholder='Review title (optional)' />
+                    <Textarea onChange={(e) => {
+                      setComment(e.target.value);
+                    }}
+                    placeholder={`The ${product.name} is....`}
+                    />
+                    <Button w='140px' colorScheme='orange' onClick={() => onSubmit()}>Publish review</Button>
+                  </Stack>
+                )}
+              </>
+            )}
             <Stack>
               <Text fontSize={'xl'} fontWeight='bold'>
                 Reviews
