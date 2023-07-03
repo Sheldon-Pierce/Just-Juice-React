@@ -220,7 +220,7 @@ const ProductScreen = () => {
                     <Flex alignItems={'center'}>
                       <BiCheckShield size='20px' />
                       <Text fontWeight={'mdeium'} fontSize='sm' ml='2'>
-                        2 year extended warranty
+                        Juice guaranteed fresh
                       </Text>
                     </Flex>
                     <Flex alignItems={'center'}>
