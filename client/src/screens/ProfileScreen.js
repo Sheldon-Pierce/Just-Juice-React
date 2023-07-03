@@ -42,7 +42,7 @@ useEffect(() => {
         toast({description: 'Profile saved.', status: 'success', isClosable: true})
         dispatch(resetUpdateSuccess());
     }
-}, [toast, updateSuccess])
+}, [toast, updateSuccess, dispatch])
 
   return userInfo ? (
     <Formik

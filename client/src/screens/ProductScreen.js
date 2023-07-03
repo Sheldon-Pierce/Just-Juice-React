@@ -220,7 +220,7 @@ const ProductScreen = () => {
                     <Flex alignItems={'center'}>
                       <BiCheckShield size='20px' />
                       <Text fontWeight={'mdeium'} fontSize='sm' ml='2'>
-                        Juice guaranteed fresh
+                        Fresh juice guaranteed
                       </Text>
                     </Flex>
                     <Flex alignItems={'center'}>
