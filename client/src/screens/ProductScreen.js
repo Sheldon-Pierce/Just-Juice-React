@@ -252,7 +252,7 @@ const ProductScreen = () => {
                   fontSize='md'
                 >
                   <Button
-                    disabled={hasUserReviewed()}
+                    isDisabled={hasUserReviewed()}
                     my='20px'
                     w='140px'
                     colorScheme='orange'

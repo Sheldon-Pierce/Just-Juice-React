@@ -11,13 +11,11 @@ export const initialState = {
   error: null,
   cart: JSON.parse(localStorage.getItem('cartItems')) ?? [],
   expressShipping: JSON.parse(localStorage.getItem('expressShipping')) ?? false,
-  subtotal: localStorage.getItem('cartItems')
-    ? calculateSubtotal(JSON.parse(localStorage.getItem('cartItems')))
-    : 0,
+  subtotal: localStorage.getItem('cartItems') ? calculateSubtotal(JSON.parse(localStorage.getItem('cartItems'))) : 0,
 };
 
 const updateLocalStorage = (cart) => {
-  localStorage.setItem(`cartItems`, JSON.stringify(cart));
+  localStorage.setItem('cartItems', JSON.stringify(cart));
   localStorage.setItem('subtotal', JSON.stringify(calculateSubtotal(cart)));
 };
 
@@ -32,9 +30,7 @@ export const cartSlice = createSlice({
       const existingItem = state.cart.find((item) => item.id === payload.id);
 
       if (existingItem) {
-        state.cart = state.cart.map((item) =>
-          item.id === existingItem.id ? payload : item
-        );
+        state.cart = state.cart.map((item) => (item.id === existingItem.id ? payload : item));
       } else {
         state.cart = [...state.cart, payload];
       }
@@ -47,25 +43,25 @@ export const cartSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
-    cartItemRemoval: (state, {payload}) => {
+    cartItemRemoval: (state, { payload }) => {
       state.cart = [...state.cart].filter((item) => item.id !== payload);
       updateLocalStorage(state.cart);
-      state.subtotal = calculateSubtotal(state.cart)
+      state.subtotal = calculateSubtotal(state.cart);
       state.loading = false;
       state.error = null;
     },
-    setExpressShipping: (state, {payload}) => {
+    setExpressShipping: (state, { payload }) => {
       state.expressShipping = payload;
       localStorage.setItem('expressShipping', payload);
     },
     clearCart: (state) => {
       localStorage.removeItem('cartItems');
       state.cart = [];
-    }
+    },
   },
 });
 
 export const { setLoading, setError, cartItemAdd, cartItemRemoval, setExpressShipping, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
 
-export const productsSelector = (state) => state.cart;
+export const cartSelector = (state) => state.cart;

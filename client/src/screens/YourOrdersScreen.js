@@ -84,13 +84,13 @@ const YourOrdersScreen = () => {
                       ${order.totalPrice} via {order.paymentMethod}
                     </Td>
                     <Td>
-                      {order.orderItems.map((item) => {
+                      {order.orderItems.map((item) => (
                         <UnorderedList key={item._id}>
                           <ListItem>
                             {item.qty} x {item.name} (${item.price} each)
                           </ListItem>
-                        </UnorderedList>;
-                      })}
+                        </UnorderedList>
+                      ))}
                     </Td>
                     <Td>
                       <Button varient='outline'>Receipt</Button>
