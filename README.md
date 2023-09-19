@@ -2,6 +2,12 @@
 
 This is a README file for the Just-Juice E-commerce site. The project utilizes React, Redux, Chakra-UI, and other related technologies to create a fully functional ecommerce website for selling juices. It provides a foundation for building an online store with features such as product listings, shopping cart management, user authentication, and more.
 
+## Website
+
+https://just-juice.onrender.com/
+
+Due to the hosting service, first load is always slow as Render works in the background.
+
 ## Table of Contents
 
 - [Installation](#installation)
