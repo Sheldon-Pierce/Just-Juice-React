@@ -133,9 +133,8 @@ const AddNewProduct = () => {
       <Td>
         <VStack>
           <Button
-            variant='outline'
+            variant='primary'
             w='160px'
-            colorScheme='orange'
             onClick={() => createNewProduct()}
           >
             <MdDriveFolderUpload />

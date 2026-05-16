@@ -73,7 +73,7 @@ const UsersTab = () => {
               thickness='2px'
               speed='0.65s'
               emptyColor='gray.200'
-              color='orange.500'
+              color='accent.green'
               size='xl'
             />
           </Stack>
@@ -102,7 +102,7 @@ const UsersTab = () => {
                       <Td> {new Date(user.createdAt).toDateString()} </Td>
                       <Td>
                         {user.isAdmin === 'true' ? (
-                          <CheckCircleIcon color='orange.500' />
+                          <CheckCircleIcon color='accent.green' />
                         ) : (
                           ''
                         )}
