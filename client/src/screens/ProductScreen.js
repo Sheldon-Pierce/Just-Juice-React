@@ -17,7 +17,7 @@ import RelatedProducts from '../components/productDetail/RelatedProducts';
 const ProductScreen = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { product, loading, error } = useSelector((s) => s.product);
+  const { product, loading, error } = useSelector((s) => s.products);
 
   useEffect(() => {
     dispatch(getProduct(id));
