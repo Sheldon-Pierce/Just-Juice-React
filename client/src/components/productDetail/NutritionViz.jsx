@@ -2,7 +2,7 @@
 // Animated bar chart left, full nutrition panel right. Bars fill from 0 on viewport entry.
 
 import { useRef } from 'react';
-import { Box, Container, Grid, Text, Flex, Heading } from '@chakra-ui/react';
+import { Box, Container, Grid, Text, Flex, Heading, useToken } from '@chakra-ui/react';
 import { motion, useInView } from 'framer-motion';
 import Reveal from '../shared/Reveal';
 import Eyebrow from '../shared/Eyebrow';
@@ -10,7 +10,7 @@ import { getMockData } from '../../data/productMockData';
 
 const MotionDiv = motion.div;
 
-const Bar = ({ label, value, max, unit, animate }) => {
+const Bar = ({ label, value, max, unit, animate, fill }) => {
   const pct = Math.max(4, Math.min(100, (value / max) * 100));
   return (
     <>
@@ -20,7 +20,7 @@ const Bar = ({ label, value, max, unit, animate }) => {
           initial={{ width: 0 }}
           animate={animate ? { width: `${pct}%` } : { width: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          style={{ height: '100%', background: '#1F3A2E', borderRadius: '999px' }}
+          style={{ height: '100%', background: fill, borderRadius: '999px' }}
         />
       </Box>
       <Text fontFamily='mono' fontSize='sm' color='ink' textAlign='right'>
@@ -33,6 +33,7 @@ const Bar = ({ label, value, max, unit, animate }) => {
 const NutritionViz = ({ product }) => {
   const { nutrition, panel, volume } = getMockData(product);
   const containerRef = useRef(null);
+  const [accentGreen] = useToken('colors', ['accent.green']);
   const inView = useInView(containerRef, { once: true, margin: '0px 0px -80px 0px' });
 
   return (
@@ -53,6 +54,7 @@ const NutritionViz = ({ product }) => {
                   max={row.max}
                   unit={row.unit}
                   animate={inView}
+                  fill={accentGreen}
                 />
               ))}
             </Box>
