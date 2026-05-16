@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import theme from './theme';
 import Navbar from './components/Navbar';
 import { Footer } from './components/Footer';
+import ScrollToHash from './components/shared/ScrollToHash';
 import { LandingScreen } from './screens/LandingScreen';
 import ProductsScreen from './screens/ProductsScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -20,6 +21,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Router>
+        <ScrollToHash />
         <Navbar />
         <main>
           <Routes>
