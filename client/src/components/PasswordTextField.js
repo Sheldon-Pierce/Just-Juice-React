@@ -1,8 +1,6 @@
-import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
-import { Input } from '@chakra-ui/input';
+import { FormControl, FormErrorMessage, FormLabel, Input, InputRightElement, Button, InputGroup } from '@chakra-ui/react';
 import { Field, useField } from 'formik';
 import { useState } from 'react';
-import { InputRightElement, Button, InputGroup } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 const PasswordTextField = ({ label, type, name, placeholder }) => {
@@ -19,6 +17,11 @@ const PasswordTextField = ({ label, type, name, placeholder }) => {
           type={showPassword ? 'text' : type}
           name={name}
           placeholder={placeholder}
+          bg='paper'
+          fontFamily='body'
+          borderColor='line'
+          _hover={{ borderColor: 'ink' }}
+          _focusVisible={{ borderColor: 'accent.green', boxShadow: '0 0 0 1px #1F3A2E' }}
         />
         <InputRightElement h='full'>
           <Button

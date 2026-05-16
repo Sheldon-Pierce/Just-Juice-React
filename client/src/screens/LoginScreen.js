@@ -9,7 +9,6 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  useColorModeValue,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -84,7 +83,6 @@ const LoginScreen = () => {
                     as={ReactLink}
                     to='/registration'
                     variant='link'
-                    colorScheme='orange'
                   >
                     Sign Up
                   </Button>
@@ -118,7 +116,7 @@ const LoginScreen = () => {
                     </FormControl>
                 </Stack>
                 <Stack spacing='6'>
-                    <Button colorScheme={'orange'} size='lg' fontSize={'md'} isLoading={loading} type='submit'>
+                    <Button variant='primary' size='lg' fontSize={'md'} isLoading={loading} type='submit'>
                       Sign in
                     </Button>
                 </Stack>

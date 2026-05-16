@@ -7,11 +7,14 @@
   "scripts": {
     "client": "npm run start --prefix client",
     "start": "node server/index.js",
-    "app": "concurrently npm \"npm run start\" \"npm run client\"",
+    "app": "concurrently -k -n server,client -c green,blue \"npm run start\" \"npm run client\"",
     "build": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "concurrently": "^7.6.0",

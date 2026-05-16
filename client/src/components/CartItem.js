@@ -2,7 +2,6 @@ import {
   CloseButton,
   Flex,
   Select,
-  useColorModeValue as mode,
   Stack,
   Image,
   Box,
@@ -47,7 +46,7 @@ const CartItem = ({ cartItem }) => {
       >
         <Select
           maxW='64px'
-          focusBorderColor={mode('orange.500', 'orange.200')}
+          focusBorderColor='accent.green'
           value={qty}
           onChange={(e) => {
             dispatch(addCartItem(id, e.target.value));

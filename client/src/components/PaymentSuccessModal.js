@@ -50,13 +50,13 @@ const PaymentSuccessModal = ({isOpen, onClose}) => {
                 <AlertIcon boxSize='55px'/>
                 <AlertTitle pt='8px' fontSize='xl' >Payment Successful</AlertTitle>
                 <Stack mt='20px' minW='200px'>
-                    <Button colorScheme='teal' variant='outline' as={ReactLink} to='/your-orders'>
+                    <Button variant='ghost' as={ReactLink} to='/your-orders'>
                         Your Order
                     </Button>
-                    <Button colorScheme='teal' variant='outline' as={ReactLink} to='/products'>
+                    <Button variant='ghost' as={ReactLink} to='/products'>
                         Products
                     </Button>
-                    <Button colorScheme='teal' variant='outline' onClick={logoutHandler}>
+                    <Button variant='ghost' onClick={logoutHandler}>
                         Logout
                     </Button>
                 </Stack>

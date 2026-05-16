@@ -1,192 +1,161 @@
+// client/src/components/Navbar.js
+// Minimalist navbar — cream background, ink links, hairline divider, accent.green
+// underline on the active route. No dark mode toggle (removed per spec §2).
+
 import {
-  Box,
-  Flex,
-  HStack,
-  Link,
-  IconButton,
-  Icon,
-  Text,
-  useDisclosure,
-  Button,
-  Stack,
-  useColorModeValue,
-  useColorMode,
-  useToast,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
+  Box, Flex, HStack, Stack, Link, Text, Button,
+  Menu, MenuButton, MenuList, MenuItem, MenuDivider,
+  IconButton, useDisclosure, useToast,
 } from '@chakra-ui/react';
-import { Link as ReactLink } from 'react-router-dom';
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import { MdLocalDrink, MdLocalShipping, MdLogout, MdOutlineAdminPanelSettings } from 'react-icons/md';
-import { FiShoppingCart } from 'react-icons/fi';
-import { CgProfile } from 'react-icons/cg'
-import { useState } from 'react';
+import { Link as RouterLink, NavLink as RouterNavLink, useNavigate } from 'react-router-dom';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/actions/userActions';
 
-const ShoppingCartIcon = () => {
-  const cartInfo = useSelector((state) => state.cart);
-  const { cart } = cartInfo;
-  return (
-    <Flex>
-      <Text fontStyle='italic' as='sub' fontSize='xs'>{cart.length}</Text>
-      <Icon ml='-1.5' as={FiShoppingCart} h='4' w='7' alignSelf='center' />
-      Cart
-    </Flex>
-  )
-}
-
-
-const links = [
-  { linkName: 'Products', path: '/products' },
-  { linkName: <ShoppingCartIcon />, path: '/cart' },
+const PRIMARY_LINKS = [
+  { label: 'Shop',         to: '/products' },
+  { label: 'The Line',     to: '/products' },
+  { label: 'Our Process',  to: '/#process'  },
 ];
 
-const NavLink = ({ path, children }) => (
+const NavLink = ({ to, children }) => (
   <Link
-    as={ReactLink}
-    to={path}
-    px={2}
-    py={2}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
+    as={RouterNavLink}
+    to={to}
+    fontFamily='body'
+    fontSize='sm'
+    color='ink'
+    _hover={{ textDecoration: 'none', color: 'accent.green' }}
+    _activeLink={{
+      borderBottom: '1px solid',
+      borderColor: 'accent.green',
+      pb: '2px',
     }}
   >
     {children}
   </Link>
 );
 
+const CartLink = () => {
+  const { cart } = useSelector((state) => state.cart);
+  return (
+    <Link as={RouterLink} to='/cart' fontFamily='body' fontSize='sm' color='ink' _hover={{ color: 'accent.green', textDecoration: 'none' }}>
+      Cart ({cart.length})
+    </Link>
+  );
+};
+
 const Navbar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
-  const [isHovering, setIsHovering] = useState(false);
-  const user = useSelector((state) => state.user);
-  const { userInfo } = user;
+  const { userInfo } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const toast = useToast();
+  const navigate = useNavigate();
 
-  const logoutHandler = () => {
+  const handleLogout = () => {
     dispatch(logout());
-    toast({
-      description: 'You have been logged out.',
-      status: 'success',
-      isClosable: true,
-    });
+    toast({ description: 'Signed out.', status: 'success', isClosable: true });
+    navigate('/');
   };
-  // console.log(userInfo)
+
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-      <Flex h={16} alignItems='center' justifyContent='space-between'>
-        <IconButton
-          size='md'
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-        />
-        <HStack>
-          <Link as={ReactLink} to='/'>
-            <Flex alignItems='center'>
-              <Icon as={MdLocalDrink} h={6} w={6} color='orange.400' />
-              <Text fontWeight='extrabold'>Just Juice</Text>
-            </Flex>
+    <Box
+      as='nav'
+      bg='cream'
+      borderBottom='1px solid'
+      borderColor='line'
+      position='sticky'
+      top='0'
+      zIndex='sticky'
+    >
+      <Flex
+        maxW='container.xl'
+        mx='auto'
+        h='64px'
+        align='center'
+        justify='space-between'
+        px={{ base: '20px', md: '28px', lg: '32px' }}
+      >
+        {/* Left: wordmark + desktop links */}
+        <HStack spacing='32px'>
+          <Link as={RouterLink} to='/' _hover={{ textDecoration: 'none' }}>
+            <Text fontFamily='heading' fontSize='xl' color='ink' letterSpacing='tight'>
+              Just Juice
+            </Text>
           </Link>
-          <HStack as='nav' spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {links.map((link) => (
-              <NavLink key={link.linkName} path={link.path}>
-                {link.linkName}
-              </NavLink>
+          <HStack as='nav' spacing='24px' display={{ base: 'none', md: 'flex' }}>
+            {PRIMARY_LINKS.map((l) => (
+              <NavLink key={l.label} to={l.to}>{l.label}</NavLink>
             ))}
           </HStack>
         </HStack>
-        <Flex alignItems='center'>
-          <NavLink>
-            <Icon
-              as={colorMode === 'light' ? MoonIcon : SunIcon}
-              alignSelf='center'
-              onClick={() => toggleColorMode()}
-            ></Icon>
-          </NavLink>
 
+        {/* Right: cart, account or sign-in/up */}
+        <HStack spacing='20px'>
+          <Box display={{ base: 'none', md: 'block' }}>
+            <CartLink />
+          </Box>
           {userInfo ? (
-            <>
             <Menu>
-              <MenuButton px='4' py='2' transition='all 0.4s' as={Button}>
-                  {userInfo.name} <ChevronDownIcon />
+              <MenuButton
+                as={Button}
+                variant='link'
+                color='ink'
+                fontFamily='body'
+                fontSize='sm'
+                rightIcon={<ChevronDownIcon />}
+              >
+                {userInfo.name}
               </MenuButton>
-              <MenuList>
-                <MenuItem as={ReactLink} to='/profile'>
-                  <CgProfile />
-                  <Text ml='2'>Profile</Text>
-                </MenuItem>
-                <MenuItem as={ReactLink} to='/your-orders'>
-                  <MdLocalShipping />
-                  <Text ml='2'>Your Orders</Text>
-                </MenuItem>
+              <MenuList bg='paper' borderColor='line' fontFamily='body' fontSize='sm'>
+                <MenuItem as={RouterLink} to='/profile'>Profile</MenuItem>
+                <MenuItem as={RouterLink} to='/your-orders'>Your Orders</MenuItem>
                 {userInfo.isAdmin === 'true' && (
                   <>
-                    <MenuDivider />
-                    <MenuItem as={ReactLink} to={'/admin-console'}>
-                      <MdOutlineAdminPanelSettings />
-                      <Text ml='2'>Admin Console</Text>
-                    </MenuItem>                   
+                    <MenuDivider borderColor='line' />
+                    <MenuItem as={RouterLink} to='/admin-console'>Admin Console</MenuItem>
                   </>
                 )}
-                <MenuDivider />
-                <MenuItem onClick={logoutHandler}>
-                  <MdLogout />
-                  <Text ml='2'>Logout</Text>
-                </MenuItem>
+                <MenuDivider borderColor='line' />
+                <MenuItem onClick={handleLogout}>Sign out</MenuItem>
               </MenuList>
             </Menu>
-            </>
           ) : (
-            <>
+            <HStack spacing='12px'>
+              <Button as={RouterLink} to='/login' variant='link' size='sm'>Sign in</Button>
               <Button
-                as={ReactLink}
-                to='/login'
-                p={2}
-                fontSize='sm'
-                fontWeight={400}
-                variant='link'
-              >
-                Sign In
-              </Button>
-              <Button
-                as={ReactLink}
+                as={RouterLink}
                 to='/registration'
-                m={2}
+                variant='primary'
+                size='sm'
                 display={{ base: 'none', md: 'inline-flex' }}
-                fontSize='sm'
-                fontWeight={600}
-                _hover={{ bg: 'orange.400' }}
-                bg='orange.500'
-                color='white'
               >
-                Sign Up
+                Sign up
               </Button>
-            </>
+            </HStack>
           )}
-        </Flex>
+          <IconButton
+            aria-label='Toggle menu'
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            variant='link'
+            display={{ md: 'none' }}
+            onClick={isOpen ? onClose : onOpen}
+          />
+        </HStack>
       </Flex>
-      {isOpen ? (
-        <Box pb={4} display={{ md: 'none' }}>
-          <Stack as='nav' spacing={4}>
-            {links.map((link) => (
-              <NavLink key={link.linkName} path={link.path}>
-                {link.linkName}
-              </NavLink>
+
+      {/* Mobile dropdown sheet */}
+      {isOpen && (
+        <Box pb='16px' display={{ md: 'none' }} px='20px' borderTop='1px solid' borderColor='line'>
+          <Stack as='nav' spacing='12px' pt='12px'>
+            {PRIMARY_LINKS.map((l) => (
+              <NavLink key={l.label} to={l.to}>{l.label}</NavLink>
             ))}
-            <NavLink key='sign up' path='/registration'>
-              Sign Up
-            </NavLink>
+            <CartLink />
+            {!userInfo && <NavLink to='/registration'>Sign up</NavLink>}
           </Stack>
         </Box>
-      ) : null}
+      )}
     </Box>
   );
 };

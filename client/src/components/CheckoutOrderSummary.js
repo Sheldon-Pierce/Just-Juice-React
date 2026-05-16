@@ -3,7 +3,6 @@ import {
   Heading,
   Stack,
   Text,
-  useColorModeValue as mode,
   Badge,
   Box,
   Link,
@@ -22,7 +21,7 @@ import { resetCart } from '../redux/actions/cartActions';
 import { useNavigate } from 'react-router-dom';
 
 const CheckoutOrderSummary = () => {
-  const colorMode = mode('gray.600', 'gray.400');
+  const colorMode = 'gray.600';
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
   const user = useSelector((state) => state.user);
@@ -83,7 +82,7 @@ const CheckoutOrderSummary = () => {
 
   return (
     <Stack spacing='8' rounded='xl' padding='8' width='full'>
-      <Heading size='md'>Order Summary</Heading>
+      <Heading variant='sub'>Order Summary</Heading>
       {cart.map((item) => (
         <CheckoutItem key={item.id} cartItem={item} />
       ))}
@@ -129,7 +128,7 @@ const CheckoutOrderSummary = () => {
       />
       <Box align='center'>
         <Text fontSize='sm'>Have questions? or need help to complete your order?</Text>
-        <Flex justifyContent='center' color={mode('orange.500', 'orange.100')}>
+        <Flex justifyContent='center' color='accent.green'>
           <Flex align='center'>
             <ChatIcon />
             <Text m='2'>Live Chat</Text>
@@ -144,7 +143,7 @@ const CheckoutOrderSummary = () => {
           </Flex>
         </Flex>
       </Box>
-      <Divider bg={mode('gray.400', 'gray.800')} />
+      <Divider bg='gray.400' />
       <Flex justifyContent='center' my='6' fontWeight='semibold'>
         <p>or</p>
         <Link as={ReactLink} to='/products' ml='1'>

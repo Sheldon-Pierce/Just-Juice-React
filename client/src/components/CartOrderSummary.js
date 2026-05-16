@@ -4,7 +4,6 @@ import {
   Heading,
   Stack,
   Text,
-  useColorModeValue as mode,
   Badge,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -26,16 +25,16 @@ const CartOrderSummary = () => {
 
   return (
     <Stack spacing='8' borderWdith='1px' rounded='lg' padding='8' w='full'>
-      <Heading size='md'>Order Summary</Heading>
+      <Heading variant='sub'>Order Summary</Heading>
       <Stack spacing='6'>
         <Flex justify={'space-between'}>
-          <Text fontWeight={'medium'} color={mode('gray.600', 'gray.400')}>
+          <Text fontWeight={'medium'} color='gray.600'>
             Subtotal
           </Text>
           <Text fontWeight={'medium'}> ${subtotal}</Text>
         </Flex>
         <Flex justify={'space-between'}>
-          <Text fontWeight={'medium'} color={mode('gray.600', 'gray.400')}>
+          <Text fontWeight={'medium'} color='gray.600'>
             Shipping
           </Text>
           <Text fontWeight={'medium'}>
@@ -62,7 +61,7 @@ const CartOrderSummary = () => {
       <Button
         as={ReactLink}
         to='../checkout'
-        colorScheme='orange'
+        variant='primary'
         size='lg'
         fontSize='md'
         rightIcon={<FaArrowRight />}
