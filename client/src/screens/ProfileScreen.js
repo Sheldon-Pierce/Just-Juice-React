@@ -126,7 +126,7 @@ useEffect(() => {
                 </Stack>
                 <Stack spacing='6'>
                   <Button
-                    colorScheme='orange'
+                    variant='primary'
                     size='lg'
                     fontSize='md'
                     isLoading={loading}
@@ -141,7 +141,6 @@ useEffect(() => {
               direction='column'
               align='center'
               flex='1'
-              _dark={{ bg: 'gray.900' }}
             >
               <Card>
                 <CardHeader>

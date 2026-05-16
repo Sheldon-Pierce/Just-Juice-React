@@ -13,7 +13,7 @@ const NewsletterSignup = () => {
     e.preventDefault();
     if (!email) return;
     console.log('[Newsletter] would subscribe:', email);
-    toast({ description: 'Thanks — you're on the list.', status: 'success', isClosable: true });
+    toast({ description: "Thanks — you're on the list.", status: 'success', isClosable: true });
     setEmail('');
   };
 

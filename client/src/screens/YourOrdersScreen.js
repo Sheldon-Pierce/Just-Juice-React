@@ -51,7 +51,7 @@ const YourOrdersScreen = () => {
               thickness='2px'
               speed='0.65s'
               emptyColor='gray.200'
-              color='orange.500'
+              color='accent.green'
               size='xl'
             />
           </Stack>

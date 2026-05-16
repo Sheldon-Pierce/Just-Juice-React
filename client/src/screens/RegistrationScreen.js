@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  useColorModeValue as mode,
   AlertIcon,
   AlertTitle,
   Alert,
@@ -78,7 +77,6 @@ const RegistrationScreen = () => {
                     as={ReactLink}
                     to='/login'
                     variant='link'
-                    colorScheme='orange'
                   >
                     Sign in
                   </Button>
@@ -135,7 +133,7 @@ const RegistrationScreen = () => {
                 </Stack>
                 <Stack spacing='6'>
                   <Button
-                    colorScheme={'orange'}
+                    variant='primary'
                     size='lg'
                     fontSize={'md'}
                     isLoading={loading}
