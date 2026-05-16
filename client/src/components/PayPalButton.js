@@ -16,7 +16,7 @@ const PayPalButton = ({ total, onPaymentSuccess, onPaymentError, disabled }) => 
   }, [paypalClient]);
   return !paypalClient ? (
     <Stack direction='row' spacing={4} alignSelf='center'>
-      <Spinner mt={20} thickness='2px' speed='0.65s' emptyColor='gray.200' color='orange.500' size='xl' />
+      <Spinner mt={20} thickness='2px' speed='0.65s' emptyColor='gray.200' color='accent.green' size='xl' />
     </Stack>
   ) : (
     <PayPalScriptProvider

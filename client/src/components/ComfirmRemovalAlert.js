@@ -32,7 +32,7 @@ const ComfirmRemovalAlert = ({ isOpen, onClose, cancelRef, itemToDelete, deleteA
                     <Button ref={cancelRef} onClick={onClose} >
                         Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={onDeleteItem} ml='3' >
+                    <Button variant='primary' onClick={onDeleteItem} ml='3' >
                         Delete {itemToDelete.name}
                     </Button>
                 </AlertDialogFooter>

@@ -1,7 +1,6 @@
 import {
   Flex,
   Select,
-  useColorModeValue as mode,
   Image,
   Box,
   Text,
@@ -34,7 +33,7 @@ const CheckoutItem = ({ cartItem }) => {
           <Spacer />
           <Select
             maxW='64px'
-            focusBorderColor={mode('orange.500', 'orange.200')}
+            focusBorderColor='accent.green'
             value={qty}
             onChange={(e) => {
               dispatch(addCartItem(id, e.target.value));
@@ -51,7 +50,7 @@ const CheckoutItem = ({ cartItem }) => {
             <Text fontWeight='bold'>${price}</Text>
         </Box>
       </Flex>
-      <Divider bg={mode('gray.400', 'gray.800')} />
+      <Divider bg='gray.400' />
     </>
   );
 };

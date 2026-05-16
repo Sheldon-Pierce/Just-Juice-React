@@ -5,7 +5,6 @@ import {
   HStack,
   Link,
   Stack,
-  useColorModeValue as mode,
   Spinner,
   Alert,
   AlertTitle,
@@ -32,7 +31,7 @@ const CartScreen = () => {
             thickness='2px'
             speed='0.65s'
             emptyColor='gray.200'
-            color='orange.500'
+            color='accent.green'
             size='xl'
           />
         </Stack>
@@ -79,7 +78,7 @@ const CartScreen = () => {
 
                 <HStack mt='6' fontWeight={'semibold'}>
                     <p>or</p>
-                    <Link as={ReactLink} to='../products' color={mode('orange.500', 'orange.200')}>Continue Shopping</Link>
+                    <Link as={ReactLink} to='../products' color='accent.green'>Continue Shopping</Link>
                 </HStack>
             </Flex>
           </Stack>
