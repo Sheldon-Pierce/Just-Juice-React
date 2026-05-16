@@ -8,40 +8,29 @@ import {
   productReviewed,
   resetError,
 } from '../slices/products';
+import FIXTURE_PRODUCTS from '../../data/fixtureProducts';
+
+// Portfolio mode: products are served from a static client-side fixture so the site
+// renders without a running Mongo + Express backend. A tiny artificial delay keeps the
+// loading spinner momentarily visible — matches what a real fetch would feel like.
+const FIXTURE_DELAY_MS = 120;
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getProducts = () => async (dispatch) => {
   dispatch(setLoading(true));
-  try {
-    const { data } = await axios.get('/api/products');
-    dispatch(setProducts(data));
-  } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-          ? error.message
-          : 'An unexpected error has occured. Please try again later.'
-      )
-    );
-  }
+  await delay(FIXTURE_DELAY_MS);
+  dispatch(setProducts(FIXTURE_PRODUCTS));
 };
 
 export const getProduct = (id) => async (dispatch) => {
   dispatch(setLoading(true));
-  try {
-    const { data } = await axios.get(`/api/products/${id}`);
-    dispatch(setProduct(data));
-  } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-          ? error.message
-          : 'An unexpected error has occured. Please try again later.'
-      )
-    );
+  await delay(FIXTURE_DELAY_MS);
+  const found = FIXTURE_PRODUCTS.find((p) => p._id === id);
+  if (found) {
+    dispatch(setProduct(found));
+  } else {
+    dispatch(setError(`Product "${id}" not found.`));
   }
 };
 
