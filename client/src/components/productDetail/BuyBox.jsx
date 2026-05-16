@@ -3,7 +3,7 @@
 // Sticky-follows the user on desktop until the next section. CSS sticky is enough.
 
 import { useState } from 'react';
-import { Box, Text, Heading, Flex, Stack, Button, IconButton, useToast } from '@chakra-ui/react';
+import { Box, Text, Heading, Flex, Button, IconButton, useToast } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StarIcon } from '@chakra-ui/icons';
 import { addCartItem } from '../../redux/actions/cartActions';

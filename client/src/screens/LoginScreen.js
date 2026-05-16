@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   FormControl,
   Heading,
@@ -15,7 +14,7 @@ import {
   AlertDescription,
   useToast,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';

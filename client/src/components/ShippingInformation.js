@@ -10,7 +10,7 @@ import {
   RadioGroup,
   Tooltip,
 } from '@chakra-ui/react';
-import { Formik, formik } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import TextField from './TextField';
 import { useDispatch } from 'react-redux';
